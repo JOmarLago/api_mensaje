@@ -22,3 +22,9 @@ def get_mensaje(mensaje_id: int):
         if mensaje.id == mensaje_id:
             return mensaje
     raise HTTPException(status_code=404, detail="Mensaje no encontrado")
+@app.post("/mensajes")
+def crear_mensaje(mensaje: Persona):
+    # Si el mensaje no tiene ID, se lo asignamos automáticamente
+    mensaje.id = len(mensajes_db) + 1
+    mensajes_db.append(mensaje)
+    return mensaje
